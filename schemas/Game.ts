@@ -16,7 +16,11 @@ export const Game = list({
   },
   fields: {
     season: text({ isRequired: true }),
-    week: integer({ isRequired: true }),
+    slug: text({isRequired: true}),
+    week: relationship({
+      ref: "Week.games",
+      many: false,
+    }),
     spread: float(),
     homeTeam: relationship({
       ref: "Team",

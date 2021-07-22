@@ -2,15 +2,11 @@ import { Game } from "./schemas/Game";
 import { Pick } from "./schemas/Pick";
 import { Team } from "./schemas/Team";
 import { Player } from "./schemas/Player";
+import { Week } from "./schemas/Week";
 import { config, createSchema } from "@keystone-next/keystone/schema";
-import {
-  statelessSessions,
-  withItemData,
-} from "@keystone-next/keystone/session";
+import { statelessSessions } from "@keystone-next/keystone/session";
 import { createAuth } from "@keystone-next/auth";
 import "dotenv/config";
-
-import { lists } from "./schema";
 import { insertSeedData } from "./seed-data";
 import { extendGraphqlSchema } from "./mutations";
 
@@ -18,19 +14,20 @@ let sessionMaxAge = 60 * 60 * 24 * 360; // one year
 
 const sessionConfig = {
   maxAge: sessionMaxAge, // How long they stay signed in?
-  secret: process.env.COOKIE_SECRET,
+  secret: process.env.COOKIE_SECRET || "-- DEV COOKIE SECRET; CHANGE ME --",
 };
 
-const auth = createAuth({
+const { withAuth } = createAuth({
   listKey: "Player",
   identityField: "email",
   secretField: "password",
   initFirstItem: {
     fields: ["name", "email", "password"],
   },
+  sessionData: "id name email",
 });
 
-export default auth.withAuth(
+export default withAuth(
   config({
     server: {
       cors: {
@@ -41,10 +38,10 @@ export default auth.withAuth(
     db: {
       adapter: "prisma_postgresql",
       url: process.env.DATABASE_URL || "postgres://localhost/nfl-pickem-db",
-      async onConnect(keystone) {
+      async onConnect(context) {
         console.log("Connected to the database!");
         if (process.argv.includes("--seed-data")) {
-          await insertSeedData(keystone);
+          await insertSeedData(context);
         }
       },
     },
@@ -56,11 +53,9 @@ export default auth.withAuth(
       Team,
       Game,
       Pick,
+      Week,
     }),
     extendGraphqlSchema,
-    session: withItemData(statelessSessions(sessionConfig), {
-      // GraphQL Query
-      Player: "id name email",
-    }),
+    session: statelessSessions(sessionConfig),
   })
 );

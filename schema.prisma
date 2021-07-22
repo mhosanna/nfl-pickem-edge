@@ -1,0 +1,74 @@
+datasource postgresql {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "node_modules/.prisma/client"
+}
+
+model Player {
+  id       Int     @id @default(autoincrement())
+  name     String?
+  email    String? @unique
+  password String?
+  picks    Pick[]  @relation("Pick_player")
+}
+
+model Team {
+  id                 Int     @id @default(autoincrement())
+  name               String?
+  city               String?
+  abbreviation       String?
+  conference         String?
+  division           String?
+  from_Game_homeTeam Game[]  @relation("Game_homeTeam")
+  from_Game_awayTeam Game[]  @relation("Game_awayTeam")
+  from_Game_winner   Game[]  @relation("Game_winner")
+  from_Pick_picked   Pick[]  @relation("Pick_picked")
+}
+
+model Game {
+  id         Int     @id @default(autoincrement())
+  season     String?
+  slug       String?
+  week       Week?   @relation("Game_week", fields: [weekId], references: [id])
+  weekId     Int?    @map("week")
+  spread     Float?
+  homeTeam   Team?   @relation("Game_homeTeam", fields: [homeTeamId], references: [id])
+  homeTeamId Int?    @map("homeTeam")
+  awayTeam   Team?   @relation("Game_awayTeam", fields: [awayTeamId], references: [id])
+  awayTeamId Int?    @map("awayTeam")
+  winner     Team?   @relation("Game_winner", fields: [winnerId], references: [id])
+  winnerId   Int?    @map("winner")
+  picks      Pick[]  @relation("Pick_game")
+
+  @@index([weekId])
+  @@index([homeTeamId])
+  @@index([awayTeamId])
+  @@index([winnerId])
+}
+
+model Pick {
+  id        Int      @id @default(autoincrement())
+  player    Player?  @relation("Pick_player", fields: [playerId], references: [id])
+  playerId  Int?     @map("player")
+  game      Game?    @relation("Pick_game", fields: [gameId], references: [id])
+  gameId    Int?     @map("game")
+  picked    Team?    @relation("Pick_picked", fields: [pickedId], references: [id])
+  pickedId  Int?     @map("picked")
+  isCorrect Boolean?
+
+  @@index([playerId])
+  @@index([gameId])
+  @@index([pickedId])
+}
+
+model Week {
+  id     Int     @id @default(autoincrement())
+  label  String?
+  slug   String? @unique
+  season String?
+  games  Game[]  @relation("Game_week")
+}
