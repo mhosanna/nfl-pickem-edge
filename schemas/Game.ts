@@ -1,5 +1,6 @@
 import { list } from "@keystone-next/keystone/schema";
 import { text, integer, float, relationship } from "@keystone-next/fields";
+import { deleteManyBeforeDeleteHook } from "../utils/cascadeDelete"
 
 export const Game = list({
   ui: {
@@ -37,6 +38,9 @@ export const Game = list({
     picks: relationship({
       ref: "Pick.game",
       many: true,
+      hooks: {
+        beforeDelete: deleteManyBeforeDeleteHook({ref: "Pick"}),
+      },
     }),
   },
   hooks: {
@@ -81,19 +85,19 @@ export const Game = list({
       const changedFields = Object.keys(originalInput);
       if (changedFields.includes("winner")) {
         const picksForThisGame = await context.lists.Pick.findMany({
-          where: { game: { id: updatedItem.id } },
+          where: { game: { id: {equals: updatedItem.id} } },
           resolveFields: "id,picked{id}",
         });
 
         picksForThisGame.map(async (pick) => {
           if (pick.picked.id == updatedItem.winnerId) {
             return await context.lists.Pick.updateOne({
-              id: pick.id,
+              where: { id:  pick.id},
               data: { isCorrect: true },
             });
           } else if (pick.picked.id != updatedItem.winnerId) {
             return await context.lists.Pick.updateOne({
-              id: pick.id,
+              where: {id: pick.id},
               data: { isCorrect: false },
             });
           }

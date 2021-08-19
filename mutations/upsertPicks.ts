@@ -12,7 +12,7 @@ async function upsertPicks(
 ): Promise<PickCreateInput> {
   // 0. if the game already has a winner, don't let player make a pick
   const picksGame = await context.lists.Game.findOne({
-    where: { id: gameId },
+    where: { id:  gameId  },
     query: "id winner {id}",
   });
   if (picksGame.winner) return;
@@ -23,12 +23,12 @@ async function upsertPicks(
       AND: [
         {
           player: {
-            id: playerId,
+            id: {equals: playerId},
           },
         },
         {
           game: {
-            id: gameId,
+            id: {equals: gameId},
           },
         },
       ],
@@ -41,12 +41,12 @@ async function upsertPicks(
     //if selected same team, delete pick
     if (existingPick[0].picked.id === teamId) {
       return await context.lists.Pick.deleteOne({
-        id: existingPick[0].id,
+        where: {id: existingPick[0].id},
         resolveFields: false,
       });
     } else {
       return await context.lists.Pick.updateOne({
-        id: existingPick[0].id,
+        where: {id: existingPick[0].id},
         data: {
           picked: { connect: { id: teamId } },
         },
