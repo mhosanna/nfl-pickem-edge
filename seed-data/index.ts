@@ -1,14 +1,13 @@
+import { KeystoneContext } from "@keystone-next/types";
 import { footballTeams } from "./data";
 
-export async function insertSeedData(ks: any) {
-  const keystone = ks.keystone || ks;
-  const adapter = keystone.adapters?.KnexAdapter || keystone.adapter;
+export async function insertSeedData(context: KeystoneContext) {
 
   console.log(`🌱 Inserting Seed Data: ${footballTeams.length} Football Teams`);
-  const { prisma } = adapter;
+
   for (const team of footballTeams) {
     console.log(` 🏈 Adding Team: ${team.name}`);
-    await prisma.team.create({
+    await context.sudo().lists.Team.createOne({
       data: {
         name: team.name,
         city: team.city,

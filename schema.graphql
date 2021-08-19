@@ -1,934 +1,50 @@
-"""
- A keystone list
-"""
-type Player {
-  id: ID!
-  name: String
-  email: String
-  password: PasswordState
-  picks(
-    where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PickOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Pick!]
-  _picksMeta(
-    where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PickOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use picksCount instead."
-    )
-  picksCount(where: PickWhereInput! = {}): Int
-}
-
-type PasswordState {
-  isSet: Boolean!
-}
-
-type _QueryMeta {
-  count: Int
-}
-
-input PlayerWhereInput {
-  AND: [PlayerWhereInput!]
-  OR: [PlayerWhereInput!]
-  id: ID
-  id_not: ID
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_in: [ID]
-  id_not_in: [ID]
-  name: String
-  name_not: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  name_i: String
-  name_not_i: String
-  name_contains_i: String
-  name_not_contains_i: String
-  name_starts_with_i: String
-  name_not_starts_with_i: String
-  name_ends_with_i: String
-  name_not_ends_with_i: String
-  name_in: [String]
-  name_not_in: [String]
-  email: String
-  email_not: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  email_i: String
-  email_not_i: String
-  email_contains_i: String
-  email_not_contains_i: String
-  email_starts_with_i: String
-  email_not_starts_with_i: String
-  email_ends_with_i: String
-  email_not_ends_with_i: String
-  email_in: [String]
-  email_not_in: [String]
-  password_is_set: Boolean
-
-  """
-   condition must be true for all nodes
-  """
-  picks_every: PickWhereInput
-
-  """
-   condition must be true for at least 1 node
-  """
-  picks_some: PickWhereInput
-
-  """
-   condition must be false for all nodes
-  """
-  picks_none: PickWhereInput
-}
-
-input PlayerWhereUniqueInput {
-  id: ID
-  email: String
-}
-
-enum SortPlayersBy {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
-}
-
-input PlayerOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  email: OrderDirection
-}
-
-enum OrderDirection {
-  asc
-  desc
-}
-
-input PlayerUpdateInput {
-  name: String
-  email: String
-  password: String
-  picks: PickRelateToManyInput
-}
-
-input PickRelateToManyInput {
-  create: [PickCreateInput]
-  connect: [PickWhereUniqueInput]
-  disconnect: [PickWhereUniqueInput]
-  disconnectAll: Boolean
-}
-
-input PlayersUpdateInput {
-  id: ID!
-  data: PlayerUpdateInput
-}
-
-input PlayerCreateInput {
-  name: String
-  email: String
-  password: String
-  picks: PickRelateToManyInput
-}
-
-input PlayersCreateInput {
-  data: PlayerCreateInput
-}
-
-"""
- A keystone list
-"""
-type Team {
-  id: ID!
-  name: String
-  city: String
-  abbreviation: String
-  conference: String
-  division: String
-}
-
-input TeamWhereInput {
-  AND: [TeamWhereInput!]
-  OR: [TeamWhereInput!]
-  id: ID
-  id_not: ID
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_in: [ID]
-  id_not_in: [ID]
-  name: String
-  name_not: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  name_i: String
-  name_not_i: String
-  name_contains_i: String
-  name_not_contains_i: String
-  name_starts_with_i: String
-  name_not_starts_with_i: String
-  name_ends_with_i: String
-  name_not_ends_with_i: String
-  name_in: [String]
-  name_not_in: [String]
-  city: String
-  city_not: String
-  city_contains: String
-  city_not_contains: String
-  city_starts_with: String
-  city_not_starts_with: String
-  city_ends_with: String
-  city_not_ends_with: String
-  city_i: String
-  city_not_i: String
-  city_contains_i: String
-  city_not_contains_i: String
-  city_starts_with_i: String
-  city_not_starts_with_i: String
-  city_ends_with_i: String
-  city_not_ends_with_i: String
-  city_in: [String]
-  city_not_in: [String]
-  abbreviation: String
-  abbreviation_not: String
-  abbreviation_contains: String
-  abbreviation_not_contains: String
-  abbreviation_starts_with: String
-  abbreviation_not_starts_with: String
-  abbreviation_ends_with: String
-  abbreviation_not_ends_with: String
-  abbreviation_i: String
-  abbreviation_not_i: String
-  abbreviation_contains_i: String
-  abbreviation_not_contains_i: String
-  abbreviation_starts_with_i: String
-  abbreviation_not_starts_with_i: String
-  abbreviation_ends_with_i: String
-  abbreviation_not_ends_with_i: String
-  abbreviation_in: [String]
-  abbreviation_not_in: [String]
-  conference: String
-  conference_not: String
-  conference_contains: String
-  conference_not_contains: String
-  conference_starts_with: String
-  conference_not_starts_with: String
-  conference_ends_with: String
-  conference_not_ends_with: String
-  conference_i: String
-  conference_not_i: String
-  conference_contains_i: String
-  conference_not_contains_i: String
-  conference_starts_with_i: String
-  conference_not_starts_with_i: String
-  conference_ends_with_i: String
-  conference_not_ends_with_i: String
-  conference_in: [String]
-  conference_not_in: [String]
-  division: String
-  division_not: String
-  division_contains: String
-  division_not_contains: String
-  division_starts_with: String
-  division_not_starts_with: String
-  division_ends_with: String
-  division_not_ends_with: String
-  division_i: String
-  division_not_i: String
-  division_contains_i: String
-  division_not_contains_i: String
-  division_starts_with_i: String
-  division_not_starts_with_i: String
-  division_ends_with_i: String
-  division_not_ends_with_i: String
-  division_in: [String]
-  division_not_in: [String]
-}
-
-input TeamWhereUniqueInput {
-  id: ID
-}
-
-enum SortTeamsBy {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  city_ASC
-  city_DESC
-  abbreviation_ASC
-  abbreviation_DESC
-  conference_ASC
-  conference_DESC
-  division_ASC
-  division_DESC
-}
-
-input TeamOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  city: OrderDirection
-  abbreviation: OrderDirection
-  conference: OrderDirection
-  division: OrderDirection
-}
-
-input TeamUpdateInput {
-  name: String
-  city: String
-  abbreviation: String
-  conference: String
-  division: String
-}
-
-input TeamsUpdateInput {
-  id: ID!
-  data: TeamUpdateInput
-}
-
-input TeamCreateInput {
-  name: String
-  city: String
-  abbreviation: String
-  conference: String
-  division: String
-}
-
-input TeamsCreateInput {
-  data: TeamCreateInput
-}
-
-"""
- A keystone list
-"""
-type Game {
-  id: ID!
-  season: String
-  slug: String
-  week: Week
-  spread: Float
-  homeTeam: Team
-  awayTeam: Team
-  winner: Team
-  picks(
-    where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PickOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Pick!]
-  _picksMeta(
-    where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PickOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use picksCount instead."
-    )
-  picksCount(where: PickWhereInput! = {}): Int
-}
-
-input GameWhereInput {
-  AND: [GameWhereInput!]
-  OR: [GameWhereInput!]
-  id: ID
-  id_not: ID
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_in: [ID]
-  id_not_in: [ID]
-  season: String
-  season_not: String
-  season_contains: String
-  season_not_contains: String
-  season_starts_with: String
-  season_not_starts_with: String
-  season_ends_with: String
-  season_not_ends_with: String
-  season_i: String
-  season_not_i: String
-  season_contains_i: String
-  season_not_contains_i: String
-  season_starts_with_i: String
-  season_not_starts_with_i: String
-  season_ends_with_i: String
-  season_not_ends_with_i: String
-  season_in: [String]
-  season_not_in: [String]
-  slug: String
-  slug_not: String
-  slug_contains: String
-  slug_not_contains: String
-  slug_starts_with: String
-  slug_not_starts_with: String
-  slug_ends_with: String
-  slug_not_ends_with: String
-  slug_i: String
-  slug_not_i: String
-  slug_contains_i: String
-  slug_not_contains_i: String
-  slug_starts_with_i: String
-  slug_not_starts_with_i: String
-  slug_ends_with_i: String
-  slug_not_ends_with_i: String
-  slug_in: [String]
-  slug_not_in: [String]
-  week: WeekWhereInput
-  week_is_null: Boolean
-  spread: Float
-  spread_not: Float
-  spread_lt: Float
-  spread_lte: Float
-  spread_gt: Float
-  spread_gte: Float
-  spread_in: [Float]
-  spread_not_in: [Float]
-  homeTeam: TeamWhereInput
-  homeTeam_is_null: Boolean
-  awayTeam: TeamWhereInput
-  awayTeam_is_null: Boolean
-  winner: TeamWhereInput
-  winner_is_null: Boolean
-
-  """
-   condition must be true for all nodes
-  """
-  picks_every: PickWhereInput
-
-  """
-   condition must be true for at least 1 node
-  """
-  picks_some: PickWhereInput
-
-  """
-   condition must be false for all nodes
-  """
-  picks_none: PickWhereInput
-}
-
-input GameWhereUniqueInput {
-  id: ID
-}
-
-enum SortGamesBy {
-  id_ASC
-  id_DESC
-  season_ASC
-  season_DESC
-  slug_ASC
-  slug_DESC
-  spread_ASC
-  spread_DESC
-}
-
-input GameOrderByInput {
-  id: OrderDirection
-  season: OrderDirection
-  slug: OrderDirection
-  spread: OrderDirection
-}
-
-input GameUpdateInput {
-  season: String
-  slug: String
-  week: WeekRelateToOneInput
-  spread: Float
-  homeTeam: TeamRelateToOneInput
-  awayTeam: TeamRelateToOneInput
-  winner: TeamRelateToOneInput
-  picks: PickRelateToManyInput
-}
-
-input WeekRelateToOneInput {
-  create: WeekCreateInput
-  connect: WeekWhereUniqueInput
-  disconnect: WeekWhereUniqueInput
-  disconnectAll: Boolean
-}
-
-input TeamRelateToOneInput {
-  create: TeamCreateInput
-  connect: TeamWhereUniqueInput
-  disconnect: TeamWhereUniqueInput
-  disconnectAll: Boolean
-}
-
-input GamesUpdateInput {
-  id: ID!
-  data: GameUpdateInput
-}
-
-input GameCreateInput {
-  season: String
-  slug: String
-  week: WeekRelateToOneInput
-  spread: Float
-  homeTeam: TeamRelateToOneInput
-  awayTeam: TeamRelateToOneInput
-  winner: TeamRelateToOneInput
-  picks: PickRelateToManyInput
-}
-
-input GamesCreateInput {
-  data: GameCreateInput
-}
-
-"""
- A keystone list
-"""
-type Pick {
-  id: ID!
-  player: Player
-  game: Game
-  picked: Team
-  isCorrect: Boolean
-}
-
-input PickWhereInput {
-  AND: [PickWhereInput!]
-  OR: [PickWhereInput!]
-  id: ID
-  id_not: ID
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_in: [ID]
-  id_not_in: [ID]
-  player: PlayerWhereInput
-  player_is_null: Boolean
-  game: GameWhereInput
-  game_is_null: Boolean
-  picked: TeamWhereInput
-  picked_is_null: Boolean
-  isCorrect: Boolean
-  isCorrect_not: Boolean
-}
-
-input PickWhereUniqueInput {
-  id: ID
-}
-
-enum SortPicksBy {
-  id_ASC
-  id_DESC
-  isCorrect_ASC
-  isCorrect_DESC
-}
-
-input PickOrderByInput {
-  id: OrderDirection
-  isCorrect: OrderDirection
-}
-
-input PickUpdateInput {
-  player: PlayerRelateToOneInput
-  game: GameRelateToOneInput
-  picked: TeamRelateToOneInput
-  isCorrect: Boolean
-}
-
-input PlayerRelateToOneInput {
-  create: PlayerCreateInput
-  connect: PlayerWhereUniqueInput
-  disconnect: PlayerWhereUniqueInput
-  disconnectAll: Boolean
-}
-
-input GameRelateToOneInput {
-  create: GameCreateInput
-  connect: GameWhereUniqueInput
-  disconnect: GameWhereUniqueInput
-  disconnectAll: Boolean
-}
-
-input PicksUpdateInput {
-  id: ID!
-  data: PickUpdateInput
-}
-
-input PickCreateInput {
-  player: PlayerRelateToOneInput
-  game: GameRelateToOneInput
-  picked: TeamRelateToOneInput
-  isCorrect: Boolean
-}
-
-input PicksCreateInput {
-  data: PickCreateInput
-}
-
-"""
- A keystone list
-"""
-type Week {
-  id: ID!
-  label: String
-  slug: String
-  season: String
-  games(
-    where: GameWhereInput! = {}
-    search: String
-    sortBy: [SortGamesBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [GameOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Game!]
-  _gamesMeta(
-    where: GameWhereInput! = {}
-    search: String
-    sortBy: [SortGamesBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [GameOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use gamesCount instead."
-    )
-  gamesCount(where: GameWhereInput! = {}): Int
-}
-
-input WeekWhereInput {
-  AND: [WeekWhereInput!]
-  OR: [WeekWhereInput!]
-  id: ID
-  id_not: ID
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_in: [ID]
-  id_not_in: [ID]
-  label: String
-  label_not: String
-  label_contains: String
-  label_not_contains: String
-  label_starts_with: String
-  label_not_starts_with: String
-  label_ends_with: String
-  label_not_ends_with: String
-  label_i: String
-  label_not_i: String
-  label_contains_i: String
-  label_not_contains_i: String
-  label_starts_with_i: String
-  label_not_starts_with_i: String
-  label_ends_with_i: String
-  label_not_ends_with_i: String
-  label_in: [String]
-  label_not_in: [String]
-  slug: String
-  slug_not: String
-  slug_contains: String
-  slug_not_contains: String
-  slug_starts_with: String
-  slug_not_starts_with: String
-  slug_ends_with: String
-  slug_not_ends_with: String
-  slug_i: String
-  slug_not_i: String
-  slug_contains_i: String
-  slug_not_contains_i: String
-  slug_starts_with_i: String
-  slug_not_starts_with_i: String
-  slug_ends_with_i: String
-  slug_not_ends_with_i: String
-  slug_in: [String]
-  slug_not_in: [String]
-  season: String
-  season_not: String
-  season_contains: String
-  season_not_contains: String
-  season_starts_with: String
-  season_not_starts_with: String
-  season_ends_with: String
-  season_not_ends_with: String
-  season_i: String
-  season_not_i: String
-  season_contains_i: String
-  season_not_contains_i: String
-  season_starts_with_i: String
-  season_not_starts_with_i: String
-  season_ends_with_i: String
-  season_not_ends_with_i: String
-  season_in: [String]
-  season_not_in: [String]
-
-  """
-   condition must be true for all nodes
-  """
-  games_every: GameWhereInput
-
-  """
-   condition must be true for at least 1 node
-  """
-  games_some: GameWhereInput
-
-  """
-   condition must be false for all nodes
-  """
-  games_none: GameWhereInput
-}
-
-input WeekWhereUniqueInput {
-  id: ID
-  slug: String
-}
-
-enum SortWeeksBy {
-  id_ASC
-  id_DESC
-  label_ASC
-  label_DESC
-  slug_ASC
-  slug_DESC
-  season_ASC
-  season_DESC
-}
-
-input WeekOrderByInput {
-  id: OrderDirection
-  label: OrderDirection
-  slug: OrderDirection
-  season: OrderDirection
-}
-
-input WeekUpdateInput {
-  label: String
-  slug: String
-  season: String
-  games: GameRelateToManyInput
-}
-
-input GameRelateToManyInput {
-  create: [GameCreateInput]
-  connect: [GameWhereUniqueInput]
-  disconnect: [GameWhereUniqueInput]
-  disconnectAll: Boolean
-}
-
-input WeeksUpdateInput {
-  id: ID!
-  data: WeekUpdateInput
-}
-
-input WeekCreateInput {
-  label: String
-  slug: String
-  season: String
-  games: GameRelateToManyInput
-}
-
-input WeeksCreateInput {
-  data: WeekCreateInput
-}
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-  @specifiedBy(
-    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
-  )
-
 type Mutation {
-  """
-   Create a single Player item.
-  """
-  createPlayer(data: PlayerCreateInput): Player
-
-  """
-   Create multiple Player items.
-  """
-  createPlayers(data: [PlayersCreateInput]): [Player]
-
-  """
-   Update a single Player item by ID.
-  """
-  updatePlayer(id: ID!, data: PlayerUpdateInput): Player
-
-  """
-   Update multiple Player items by ID.
-  """
-  updatePlayers(data: [PlayersUpdateInput]): [Player]
-
-  """
-   Delete a single Player item by ID.
-  """
-  deletePlayer(id: ID!): Player
-
-  """
-   Delete multiple Player items by ID.
-  """
-  deletePlayers(ids: [ID!]): [Player]
-
-  """
-   Create a single Team item.
-  """
-  createTeam(data: TeamCreateInput): Team
-
-  """
-   Create multiple Team items.
-  """
-  createTeams(data: [TeamsCreateInput]): [Team]
-
-  """
-   Update a single Team item by ID.
-  """
-  updateTeam(id: ID!, data: TeamUpdateInput): Team
-
-  """
-   Update multiple Team items by ID.
-  """
-  updateTeams(data: [TeamsUpdateInput]): [Team]
-
-  """
-   Delete a single Team item by ID.
-  """
-  deleteTeam(id: ID!): Team
-
-  """
-   Delete multiple Team items by ID.
-  """
-  deleteTeams(ids: [ID!]): [Team]
-
-  """
-   Create a single Game item.
-  """
-  createGame(data: GameCreateInput): Game
-
-  """
-   Create multiple Game items.
-  """
-  createGames(data: [GamesCreateInput]): [Game]
-
-  """
-   Update a single Game item by ID.
-  """
-  updateGame(id: ID!, data: GameUpdateInput): Game
-
-  """
-   Update multiple Game items by ID.
-  """
-  updateGames(data: [GamesUpdateInput]): [Game]
-
-  """
-   Delete a single Game item by ID.
-  """
-  deleteGame(id: ID!): Game
-
-  """
-   Delete multiple Game items by ID.
-  """
-  deleteGames(ids: [ID!]): [Game]
-
-  """
-   Create a single Pick item.
-  """
-  createPick(data: PickCreateInput): Pick
-
-  """
-   Create multiple Pick items.
-  """
-  createPicks(data: [PicksCreateInput]): [Pick]
-
-  """
-   Update a single Pick item by ID.
-  """
-  updatePick(id: ID!, data: PickUpdateInput): Pick
-
-  """
-   Update multiple Pick items by ID.
-  """
-  updatePicks(data: [PicksUpdateInput]): [Pick]
-
-  """
-   Delete a single Pick item by ID.
-  """
-  deletePick(id: ID!): Pick
-
-  """
-   Delete multiple Pick items by ID.
-  """
-  deletePicks(ids: [ID!]): [Pick]
-
-  """
-   Create a single Week item.
-  """
-  createWeek(data: WeekCreateInput): Week
-
-  """
-   Create multiple Week items.
-  """
-  createWeeks(data: [WeeksCreateInput]): [Week]
-
-  """
-   Update a single Week item by ID.
-  """
-  updateWeek(id: ID!, data: WeekUpdateInput): Week
-
-  """
-   Update multiple Week items by ID.
-  """
-  updateWeeks(data: [WeeksUpdateInput]): [Week]
-
-  """
-   Delete a single Week item by ID.
-  """
-  deleteWeek(id: ID!): Week
-
-  """
-   Delete multiple Week items by ID.
-  """
-  deleteWeeks(ids: [ID!]): [Week]
+  incrementCorrectPicks(playerId: ID!, season: String!): Player
+  upsertPicks(playerId: ID!, gameId: ID!, teamId: ID!): Pick
+  createInitialPlayer(
+    data: CreateInitialPlayerInput!
+  ): PlayerAuthenticationWithPasswordSuccess!
   authenticatePlayerWithPassword(
     email: String!
     password: String!
   ): PlayerAuthenticationWithPasswordResult!
-  createInitialPlayer(
-    data: CreateInitialPlayerInput!
-  ): PlayerAuthenticationWithPasswordSuccess!
-  incrementCorrectPicks(playerId: ID!, season: String!): Player
-  upsertPicks(playerId: ID!, gameId: ID!, teamId: ID!): Pick
+  createPlayer(data: PlayerCreateInput!): Player
+  createPlayers(data: [PlayerCreateInput!]!): [Player]
+  updatePlayer(where: PlayerWhereUniqueInput!, data: PlayerUpdateInput!): Player
+  updatePlayers(data: [PlayerUpdateArgs!]!): [Player]
+  deletePlayer(where: PlayerWhereUniqueInput!): Player
+  deletePlayers(where: [PlayerWhereUniqueInput!]!): [Player]
+  createTeam(data: TeamCreateInput!): Team
+  createTeams(data: [TeamCreateInput!]!): [Team]
+  updateTeam(where: TeamWhereUniqueInput!, data: TeamUpdateInput!): Team
+  updateTeams(data: [TeamUpdateArgs!]!): [Team]
+  deleteTeam(where: TeamWhereUniqueInput!): Team
+  deleteTeams(where: [TeamWhereUniqueInput!]!): [Team]
+  createGame(data: GameCreateInput!): Game
+  createGames(data: [GameCreateInput!]!): [Game]
+  updateGame(where: GameWhereUniqueInput!, data: GameUpdateInput!): Game
+  updateGames(data: [GameUpdateArgs!]!): [Game]
+  deleteGame(where: GameWhereUniqueInput!): Game
+  deleteGames(where: [GameWhereUniqueInput!]!): [Game]
+  createPick(data: PickCreateInput!): Pick
+  createPicks(data: [PickCreateInput!]!): [Pick]
+  updatePick(where: PickWhereUniqueInput!, data: PickUpdateInput!): Pick
+  updatePicks(data: [PickUpdateArgs!]!): [Pick]
+  deletePick(where: PickWhereUniqueInput!): Pick
+  deletePicks(where: [PickWhereUniqueInput!]!): [Pick]
+  createWeek(data: WeekCreateInput!): Week
+  createWeeks(data: [WeekCreateInput!]!): [Week]
+  updateWeek(where: WeekWhereUniqueInput!, data: WeekUpdateInput!): Week
+  updateWeeks(data: [WeekUpdateArgs!]!): [Week]
+  deleteWeek(where: WeekWhereUniqueInput!): Week
+  deleteWeeks(where: [WeekWhereUniqueInput!]!): [Week]
   endSession: Boolean!
+}
+
+input CreateInitialPlayerInput {
+  name: String
+  email: String
+  password: String
 }
 
 union AuthenticatedItem = Player
@@ -955,188 +71,494 @@ enum PasswordAuthErrorCode {
   SECRET_MISMATCH
 }
 
-input CreateInitialPlayerInput {
+type Player {
+  id: ID!
+  name: String
+  email: String
+  password: PasswordState
+  picks(
+    where: PickWhereInput! = {}
+    orderBy: [PickOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Pick!]
+  picksCount(where: PickWhereInput! = {}): Int
+}
+
+type PasswordState {
+  isSet: Boolean!
+}
+
+input PlayerWhereInput {
+  AND: [PlayerWhereInput!]
+  OR: [PlayerWhereInput!]
+  NOT: [PlayerWhereInput!]
+  id: IDFilter
+  name: StringNullableFilter
+  email: StringNullableFilter
+  password: PasswordFilter
+  picks: PickManyRelationFilter
+}
+
+input IDFilter {
+  equals: ID
+  in: [ID!]
+  notIn: [ID!]
+  lt: ID
+  lte: ID
+  gt: ID
+  gte: ID
+  not: IDFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input PasswordFilter {
+  isSet: Boolean!
+}
+
+input PickManyRelationFilter {
+  every: PickWhereInput
+  some: PickWhereInput
+  none: PickWhereInput
+}
+
+input PlayerWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+input PlayerOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  email: OrderDirection
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+input PlayerUpdateInput {
   name: String
   email: String
   password: String
+  picks: PickRelateToManyForUpdateInput
 }
 
-type Query {
-  """
-   Search for all Player items which match the where clause.
-  """
-  allPlayers(
-    where: PlayerWhereInput! = {}
-    search: String
-    sortBy: [SortPlayersBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PlayerOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Player!]
+input PickRelateToManyForUpdateInput {
+  disconnect: [PickWhereUniqueInput!]
+  set: [PickWhereUniqueInput!]
+  create: [PickCreateInput!]
+  connect: [PickWhereUniqueInput!]
+}
 
-  """
-   Search for the Player item with the matching ID.
-  """
-  Player(where: PlayerWhereUniqueInput!): Player
+input PlayerUpdateArgs {
+  where: PlayerWhereUniqueInput!
+  data: PlayerUpdateInput!
+}
 
-  """
-   Perform a meta-query on all Player items which match the where clause.
-  """
-  _allPlayersMeta(
-    where: PlayerWhereInput! = {}
-    search: String
-    sortBy: [SortPlayersBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PlayerOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use playersCount instead."
-    )
-  playersCount(where: PlayerWhereInput! = {}): Int
+input PlayerCreateInput {
+  name: String
+  email: String
+  password: String
+  picks: PickRelateToManyForCreateInput
+}
 
-  """
-   Search for all Team items which match the where clause.
-  """
-  allTeams(
-    where: TeamWhereInput! = {}
-    search: String
-    sortBy: [SortTeamsBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [TeamOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Team!]
+input PickRelateToManyForCreateInput {
+  create: [PickCreateInput!]
+  connect: [PickWhereUniqueInput!]
+}
 
-  """
-   Search for the Team item with the matching ID.
-  """
-  Team(where: TeamWhereUniqueInput!): Team
+type Team {
+  id: ID!
+  name: String
+  city: String
+  abbreviation: String
+  conference: String
+  division: String
+}
 
-  """
-   Perform a meta-query on all Team items which match the where clause.
-  """
-  _allTeamsMeta(
-    where: TeamWhereInput! = {}
-    search: String
-    sortBy: [SortTeamsBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [TeamOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use teamsCount instead."
-    )
-  teamsCount(where: TeamWhereInput! = {}): Int
+input TeamWhereInput {
+  AND: [TeamWhereInput!]
+  OR: [TeamWhereInput!]
+  NOT: [TeamWhereInput!]
+  id: IDFilter
+  name: StringNullableFilter
+  city: StringNullableFilter
+  abbreviation: StringNullableFilter
+  conference: StringNullableFilter
+  division: StringNullableFilter
+}
 
-  """
-   Search for all Game items which match the where clause.
-  """
-  allGames(
-    where: GameWhereInput! = {}
-    search: String
-    sortBy: [SortGamesBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [GameOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): [Game!]
+input TeamWhereUniqueInput {
+  id: ID
+}
 
-  """
-   Search for the Game item with the matching ID.
-  """
-  Game(where: GameWhereUniqueInput!): Game
+input TeamOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  city: OrderDirection
+  abbreviation: OrderDirection
+  conference: OrderDirection
+  division: OrderDirection
+}
 
-  """
-   Perform a meta-query on all Game items which match the where clause.
-  """
-  _allGamesMeta(
-    where: GameWhereInput! = {}
-    search: String
-    sortBy: [SortGamesBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [GameOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use gamesCount instead."
-    )
-  gamesCount(where: GameWhereInput! = {}): Int
+input TeamUpdateInput {
+  name: String
+  city: String
+  abbreviation: String
+  conference: String
+  division: String
+}
 
-  """
-   Search for all Pick items which match the where clause.
-  """
-  allPicks(
+input TeamUpdateArgs {
+  where: TeamWhereUniqueInput!
+  data: TeamUpdateInput!
+}
+
+input TeamCreateInput {
+  name: String
+  city: String
+  abbreviation: String
+  conference: String
+  division: String
+}
+
+type Game {
+  id: ID!
+  season: String
+  slug: String
+  week: Week
+  spread: Float
+  homeTeam: Team
+  awayTeam: Team
+  winner: Team
+  picks(
     where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
     orderBy: [PickOrderByInput!]! = []
-    first: Int
+    take: Int
     skip: Int! = 0
   ): [Pick!]
-
-  """
-   Search for the Pick item with the matching ID.
-  """
-  Pick(where: PickWhereUniqueInput!): Pick
-
-  """
-   Perform a meta-query on all Pick items which match the where clause.
-  """
-  _allPicksMeta(
-    where: PickWhereInput! = {}
-    search: String
-    sortBy: [SortPicksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [PickOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use picksCount instead."
-    )
   picksCount(where: PickWhereInput! = {}): Int
+}
 
-  """
-   Search for all Week items which match the where clause.
-  """
-  allWeeks(
+input GameWhereInput {
+  AND: [GameWhereInput!]
+  OR: [GameWhereInput!]
+  NOT: [GameWhereInput!]
+  id: IDFilter
+  season: StringNullableFilter
+  slug: StringNullableFilter
+  week: WeekWhereInput
+  spread: FloatNullableFilter
+  homeTeam: TeamWhereInput
+  awayTeam: TeamWhereInput
+  winner: TeamWhereInput
+  picks: PickManyRelationFilter
+}
+
+input FloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatNullableFilter
+}
+
+input GameWhereUniqueInput {
+  id: ID
+}
+
+input GameOrderByInput {
+  id: OrderDirection
+  season: OrderDirection
+  slug: OrderDirection
+  spread: OrderDirection
+}
+
+input GameUpdateInput {
+  season: String
+  slug: String
+  week: WeekRelateToOneForUpdateInput
+  spread: Float
+  homeTeam: TeamRelateToOneForUpdateInput
+  awayTeam: TeamRelateToOneForUpdateInput
+  winner: TeamRelateToOneForUpdateInput
+  picks: PickRelateToManyForUpdateInput
+}
+
+input WeekRelateToOneForUpdateInput {
+  create: WeekCreateInput
+  connect: WeekWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TeamRelateToOneForUpdateInput {
+  create: TeamCreateInput
+  connect: TeamWhereUniqueInput
+  disconnect: Boolean
+}
+
+input GameUpdateArgs {
+  where: GameWhereUniqueInput!
+  data: GameUpdateInput!
+}
+
+input GameCreateInput {
+  season: String
+  slug: String
+  week: WeekRelateToOneForCreateInput
+  spread: Float
+  homeTeam: TeamRelateToOneForCreateInput
+  awayTeam: TeamRelateToOneForCreateInput
+  winner: TeamRelateToOneForCreateInput
+  picks: PickRelateToManyForCreateInput
+}
+
+input WeekRelateToOneForCreateInput {
+  create: WeekCreateInput
+  connect: WeekWhereUniqueInput
+}
+
+input TeamRelateToOneForCreateInput {
+  create: TeamCreateInput
+  connect: TeamWhereUniqueInput
+}
+
+type Pick {
+  id: ID!
+  player: Player
+  game: Game
+  picked: Team
+  isCorrect: Boolean
+}
+
+input PickWhereInput {
+  AND: [PickWhereInput!]
+  OR: [PickWhereInput!]
+  NOT: [PickWhereInput!]
+  id: IDFilter
+  player: PlayerWhereInput
+  game: GameWhereInput
+  picked: TeamWhereInput
+  isCorrect: BooleanNullableFilter
+}
+
+input BooleanNullableFilter {
+  equals: Boolean
+  not: BooleanNullableFilter
+}
+
+input PickWhereUniqueInput {
+  id: ID
+}
+
+input PickOrderByInput {
+  id: OrderDirection
+  isCorrect: OrderDirection
+}
+
+input PickUpdateInput {
+  player: PlayerRelateToOneForUpdateInput
+  game: GameRelateToOneForUpdateInput
+  picked: TeamRelateToOneForUpdateInput
+  isCorrect: Boolean
+}
+
+input PlayerRelateToOneForUpdateInput {
+  create: PlayerCreateInput
+  connect: PlayerWhereUniqueInput
+  disconnect: Boolean
+}
+
+input GameRelateToOneForUpdateInput {
+  create: GameCreateInput
+  connect: GameWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PickUpdateArgs {
+  where: PickWhereUniqueInput!
+  data: PickUpdateInput!
+}
+
+input PickCreateInput {
+  player: PlayerRelateToOneForCreateInput
+  game: GameRelateToOneForCreateInput
+  picked: TeamRelateToOneForCreateInput
+  isCorrect: Boolean
+}
+
+input PlayerRelateToOneForCreateInput {
+  create: PlayerCreateInput
+  connect: PlayerWhereUniqueInput
+}
+
+input GameRelateToOneForCreateInput {
+  create: GameCreateInput
+  connect: GameWhereUniqueInput
+}
+
+type Week {
+  id: ID!
+  label: String
+  slug: String
+  season: String
+  games(
+    where: GameWhereInput! = {}
+    orderBy: [GameOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Game!]
+  gamesCount(where: GameWhereInput! = {}): Int
+}
+
+input WeekWhereInput {
+  AND: [WeekWhereInput!]
+  OR: [WeekWhereInput!]
+  NOT: [WeekWhereInput!]
+  id: IDFilter
+  label: StringNullableFilter
+  slug: StringNullableFilter
+  season: StringNullableFilter
+  games: GameManyRelationFilter
+}
+
+input GameManyRelationFilter {
+  every: GameWhereInput
+  some: GameWhereInput
+  none: GameWhereInput
+}
+
+input WeekWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input WeekOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  slug: OrderDirection
+  season: OrderDirection
+}
+
+input WeekUpdateInput {
+  label: String
+  slug: String
+  season: String
+  games: GameRelateToManyForUpdateInput
+}
+
+input GameRelateToManyForUpdateInput {
+  disconnect: [GameWhereUniqueInput!]
+  set: [GameWhereUniqueInput!]
+  create: [GameCreateInput!]
+  connect: [GameWhereUniqueInput!]
+}
+
+input WeekUpdateArgs {
+  where: WeekWhereUniqueInput!
+  data: WeekUpdateInput!
+}
+
+input WeekCreateInput {
+  label: String
+  slug: String
+  season: String
+  games: GameRelateToManyForCreateInput
+}
+
+input GameRelateToManyForCreateInput {
+  create: [GameCreateInput!]
+  connect: [GameWhereUniqueInput!]
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+type Query {
+  authenticatedItem: AuthenticatedItem
+  players(
+    where: PlayerWhereInput! = {}
+    orderBy: [PlayerOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Player!]
+  player(where: PlayerWhereUniqueInput!): Player
+  playersCount(where: PlayerWhereInput! = {}): Int
+  teams(
+    where: TeamWhereInput! = {}
+    orderBy: [TeamOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Team!]
+  team(where: TeamWhereUniqueInput!): Team
+  teamsCount(where: TeamWhereInput! = {}): Int
+  games(
+    where: GameWhereInput! = {}
+    orderBy: [GameOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Game!]
+  game(where: GameWhereUniqueInput!): Game
+  gamesCount(where: GameWhereInput! = {}): Int
+  picks(
+    where: PickWhereInput! = {}
+    orderBy: [PickOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Pick!]
+  pick(where: PickWhereUniqueInput!): Pick
+  picksCount(where: PickWhereInput! = {}): Int
+  weeks(
     where: WeekWhereInput! = {}
-    search: String
-    sortBy: [SortWeeksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
     orderBy: [WeekOrderByInput!]! = []
-    first: Int
+    take: Int
     skip: Int! = 0
   ): [Week!]
-
-  """
-   Search for the Week item with the matching ID.
-  """
-  Week(where: WeekWhereUniqueInput!): Week
-
-  """
-   Perform a meta-query on all Week items which match the where clause.
-  """
-  _allWeeksMeta(
-    where: WeekWhereInput! = {}
-    search: String
-    sortBy: [SortWeeksBy!]
-      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
-    orderBy: [WeekOrderByInput!]! = []
-    first: Int
-    skip: Int! = 0
-  ): _QueryMeta
-    @deprecated(
-      reason: "This query will be removed in a future version. Please use weeksCount instead."
-    )
+  week(where: WeekWhereUniqueInput!): Week
   weeksCount(where: WeekWhereInput! = {}): Int
-  authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!
 }
 
@@ -1180,6 +602,7 @@ type KeystoneAdminUIFieldMeta {
   createView: KeystoneAdminUIFieldMetaCreateView!
   listView: KeystoneAdminUIFieldMetaListView!
   itemView(id: ID!): KeystoneAdminUIFieldMetaItemView
+  search: QueryMode
 }
 
 type KeystoneAdminUIFieldMetaCreateView {

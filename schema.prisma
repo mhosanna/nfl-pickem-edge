@@ -9,7 +9,7 @@ generator client {
 }
 
 model Player {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(cuid())
   name     String?
   email    String? @unique
   password String?
@@ -17,7 +17,7 @@ model Player {
 }
 
 model Team {
-  id                 Int     @id @default(autoincrement())
+  id                 String  @id @default(cuid())
   name               String?
   city               String?
   abbreviation       String?
@@ -30,18 +30,18 @@ model Team {
 }
 
 model Game {
-  id         Int     @id @default(autoincrement())
+  id         String  @id @default(cuid())
   season     String?
   slug       String?
   week       Week?   @relation("Game_week", fields: [weekId], references: [id])
-  weekId     Int?    @map("week")
+  weekId     String? @map("week")
   spread     Float?
   homeTeam   Team?   @relation("Game_homeTeam", fields: [homeTeamId], references: [id])
-  homeTeamId Int?    @map("homeTeam")
+  homeTeamId String? @map("homeTeam")
   awayTeam   Team?   @relation("Game_awayTeam", fields: [awayTeamId], references: [id])
-  awayTeamId Int?    @map("awayTeam")
+  awayTeamId String? @map("awayTeam")
   winner     Team?   @relation("Game_winner", fields: [winnerId], references: [id])
-  winnerId   Int?    @map("winner")
+  winnerId   String? @map("winner")
   picks      Pick[]  @relation("Pick_game")
 
   @@index([weekId])
@@ -51,13 +51,13 @@ model Game {
 }
 
 model Pick {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   player    Player?  @relation("Pick_player", fields: [playerId], references: [id])
-  playerId  Int?     @map("player")
+  playerId  String?  @map("player")
   game      Game?    @relation("Pick_game", fields: [gameId], references: [id])
-  gameId    Int?     @map("game")
+  gameId    String?  @map("game")
   picked    Team?    @relation("Pick_picked", fields: [pickedId], references: [id])
-  pickedId  Int?     @map("picked")
+  pickedId  String?  @map("picked")
   isCorrect Boolean?
 
   @@index([playerId])
@@ -66,7 +66,7 @@ model Pick {
 }
 
 model Week {
-  id     Int     @id @default(autoincrement())
+  id     String  @id @default(cuid())
   label  String?
   slug   String? @unique
   season String?
