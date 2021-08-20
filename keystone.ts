@@ -15,6 +15,7 @@ let sessionMaxAge = 60 * 60 * 24 * 360; // one year
 const sessionConfig = {
   maxAge: sessionMaxAge, // How long they stay signed in?
   secret: process.env.COOKIE_SECRET || "-- DEV COOKIE SECRET; CHANGE ME --",
+  domain: process.env.SESSION_DOMAIN
 };
 
 const { withAuth } = createAuth({
