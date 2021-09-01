@@ -9,11 +9,14 @@ generator client {
 }
 
 model Player {
-  id       String  @id @default(cuid())
-  name     String?
-  email    String? @unique
-  password String?
-  picks    Pick[]  @relation("Pick_player")
+  id                      String    @id @default(cuid())
+  name                    String?
+  email                   String?   @unique
+  password                String?
+  picks                   Pick[]    @relation("Pick_player")
+  passwordResetToken      String?
+  passwordResetIssuedAt   DateTime?
+  passwordResetRedeemedAt DateTime?
 }
 
 model Team {

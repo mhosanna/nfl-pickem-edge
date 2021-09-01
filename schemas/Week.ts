@@ -1,5 +1,6 @@
 import { list } from "@keystone-next/keystone/schema";
 import { text, relationship } from "@keystone-next/fields";
+import { deleteManyBeforeDeleteHook } from "../utils/cascadeDelete";
 
 export const Week = list({
   fields: {
@@ -9,6 +10,9 @@ export const Week = list({
     games: relationship({
       ref: "Game.week",
       many: true,
+      hooks: {
+        beforeDelete: deleteManyBeforeDeleteHook({ ref: "Game" }),
+      },
     }),
   },
 });
