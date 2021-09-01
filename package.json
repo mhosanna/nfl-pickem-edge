@@ -17,6 +17,7 @@
     "@types/nodemailer": "^6.4.4",
     "dotenv": "^10.0.0",
     "nodemailer": "^6.6.3",
+    "nodemailer-postmark-transport": "^5.1.0",
     "typescript": "^4.3.2"
   }
 }
