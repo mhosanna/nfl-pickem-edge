@@ -46,7 +46,14 @@ export async function sendPasswordResetEmail(resetToken: string, to: string) {
       `),
   };
   // email the user a token
-  if (process.env.MAIL_USER.includes("ethereal.email")) {
+  if (process.env.NODE_ENV === "production") {
+    await mailTransport
+      .sendMail(email)
+      .then(() => console.log("💌 Email sent successfully!"))
+      .catch((error) =>
+        console.error("There was an error while sending the email:", error)
+      );
+  } else {
     const info = await transport
       .sendMail(email)
       .then(() =>
@@ -54,13 +61,6 @@ export async function sendPasswordResetEmail(resetToken: string, to: string) {
           `💌 Message Sent!  Preview it at ${getTestMessageUrl(info)}`
         )
       )
-      .catch((error) =>
-        console.error("There was an error while sending the email:", error)
-      );
-  } else {
-    await mailTransport
-      .sendMail(email)
-      .then(() => console.log("💌 Email sent successfully!"))
       .catch((error) =>
         console.error("There was an error while sending the email:", error)
       );
