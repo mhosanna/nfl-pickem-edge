@@ -4,10 +4,12 @@ import { checkbox, relationship } from "@keystone-next/keystone/fields";
 export const Pick = list({
   fields: {
     player: relationship({
+      isFilterable: true,
       ref: "Player.picks",
       many: false,
     }),
     game: relationship({
+      isFilterable: true,
       ref: "Game.picks",
       many: false,
     }),
@@ -16,6 +18,7 @@ export const Pick = list({
       many: false,
     }),
     isCorrect: checkbox({
+      isFilterable: true,
       defaultValue: false,
       ui: {
         itemView: { fieldMode: "read" },

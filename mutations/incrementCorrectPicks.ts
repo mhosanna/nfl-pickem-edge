@@ -5,7 +5,7 @@ async function incrementCorrectPicks(
   { playerId, season }: { playerId: string; season: string },
   context: KeystoneContext
 ): Promise<Record<string, any>> {
-  const correctPicksCount = await context.db.lists.Pick.findMany({
+  const correctPicksCount = await context.lists.Pick.findMany({
     where: {
       AND: [
         {
@@ -25,7 +25,7 @@ async function incrementCorrectPicks(
     },
   });
 
-  const player = await context.db.lists.Player.findOne({
+  const player = await context.lists.Player.findOne({
     where: { id: playerId },
   });
 

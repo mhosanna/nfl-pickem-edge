@@ -141,7 +141,9 @@ input PlayerWhereInput {
   OR: [PlayerWhereInput!]
   NOT: [PlayerWhereInput!]
   id: IDFilter
+  name: StringNullableFilter
   email: StringNullableFilter
+  picks: PickManyRelationFilter
 }
 
 input IDFilter {
@@ -187,6 +189,12 @@ input NestedStringNullableFilter {
   startsWith: String
   endsWith: String
   not: NestedStringNullableFilter
+}
+
+input PickManyRelationFilter {
+  every: PickWhereInput
+  some: PickWhereInput
+  none: PickWhereInput
 }
 
 input PlayerOrderByInput {
@@ -253,10 +261,14 @@ input TeamWhereInput {
   OR: [TeamWhereInput!]
   NOT: [TeamWhereInput!]
   id: IDFilter
+  name: StringNullableFilter
+  city: StringNullableFilter
 }
 
 input TeamOrderByInput {
   id: OrderDirection
+  name: OrderDirection
+  city: OrderDirection
 }
 
 input TeamUpdateInput {
@@ -296,6 +308,7 @@ type Game {
     skip: Int! = 0
   ): [Pick!]
   picksCount(where: PickWhereInput! = {}): Int
+  createdAt: String
 }
 
 input GameWhereUniqueInput {
@@ -307,10 +320,27 @@ input GameWhereInput {
   OR: [GameWhereInput!]
   NOT: [GameWhereInput!]
   id: IDFilter
+  season: StringNullableFilter
+  slug: StringNullableFilter
+  week: WeekWhereInput
+  winner: TeamWhereInput
+  createdAt: DateTimeNullableFilter
+}
+
+input DateTimeNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  not: DateTimeNullableFilter
 }
 
 input GameOrderByInput {
   id: OrderDirection
+  createdAt: OrderDirection
 }
 
 input GameUpdateInput {
@@ -322,6 +352,7 @@ input GameUpdateInput {
   awayTeam: TeamRelateToOneForUpdateInput
   winner: TeamRelateToOneForUpdateInput
   picks: PickRelateToManyForUpdateInput
+  createdAt: String
 }
 
 input WeekRelateToOneForUpdateInput {
@@ -350,6 +381,7 @@ input GameCreateInput {
   awayTeam: TeamRelateToOneForCreateInput
   winner: TeamRelateToOneForCreateInput
   picks: PickRelateToManyForCreateInput
+  createdAt: String
 }
 
 input WeekRelateToOneForCreateInput {
@@ -379,6 +411,14 @@ input PickWhereInput {
   OR: [PickWhereInput!]
   NOT: [PickWhereInput!]
   id: IDFilter
+  player: PlayerWhereInput
+  game: GameWhereInput
+  isCorrect: BooleanNullableFilter
+}
+
+input BooleanNullableFilter {
+  equals: Boolean
+  not: BooleanNullableFilter
 }
 
 input PickOrderByInput {
@@ -438,6 +478,7 @@ type Week {
     skip: Int! = 0
   ): [Game!]
   gamesCount(where: GameWhereInput! = {}): Int
+  createdAt: String
 }
 
 input WeekWhereUniqueInput {
@@ -449,10 +490,14 @@ input WeekWhereInput {
   OR: [WeekWhereInput!]
   NOT: [WeekWhereInput!]
   id: IDFilter
+  slug: StringNullableFilter
+  season: StringNullableFilter
+  createdAt: DateTimeNullableFilter
 }
 
 input WeekOrderByInput {
   id: OrderDirection
+  createdAt: OrderDirection
 }
 
 input WeekUpdateInput {
@@ -460,6 +505,7 @@ input WeekUpdateInput {
   slug: String
   season: String
   games: GameRelateToManyForUpdateInput
+  createdAt: String
 }
 
 input GameRelateToManyForUpdateInput {
@@ -479,6 +525,7 @@ input WeekCreateInput {
   slug: String
   season: String
   games: GameRelateToManyForCreateInput
+  createdAt: String
 }
 
 input GameRelateToManyForCreateInput {

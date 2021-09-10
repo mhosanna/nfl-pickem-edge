@@ -11,14 +11,14 @@ async function upsertPicks(
   context: KeystoneContext
 ): Promise<PickCreateInput> {
   // 0. if the game already has a winner, don't let player make a pick
-  const picksGame = await context.db.lists.Game.findOne({
+  const picksGame = await context.lists.Game.findOne({
     where: { id:  gameId  },
     query: "id winner {id}",
   });
   if (picksGame.winner) return;
 
   //1. check if player has pick for this gameId already
-  const existingPick = await context.db.lists.Pick.findMany({
+  const existingPick = await context.lists.Pick.findMany({
     where: {
       AND: [
         {
@@ -40,12 +40,12 @@ async function upsertPicks(
   if (existingPick.length > 0) {
     //if selected same team, delete pick
     if (existingPick[0].picked.id === teamId) {
-      return await context.db.lists.Pick.deleteOne({
+      return await context.lists.Pick.deleteOne({
         where: {id: existingPick[0].id},
         resolveFields: false,
       });
     } else {
-      return await context.db.lists.Pick.updateOne({
+      return await context.lists.Pick.updateOne({
         where: {id: existingPick[0].id},
         data: {
           picked: { connect: { id: teamId } },
@@ -56,7 +56,7 @@ async function upsertPicks(
   }
   //3. if not, create a new pick
   else {
-    return await context.db.lists.Pick.createOne({
+    return await context.lists.Pick.createOne({
       data: {
         player: { connect: { id: playerId } },
         game: { connect: { id: gameId } },

@@ -36,7 +36,6 @@ const { withAuth } = createAuth({
 });
 
 export default withAuth(
-  //@ts-ignore
   config({
     server: {
       cors: {
