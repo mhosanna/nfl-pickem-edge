@@ -1,5 +1,5 @@
-import { list } from "@keystone-next/keystone/schema";
-import { checkbox, relationship } from "@keystone-next/fields";
+import { list } from "@keystone-next/keystone";
+import { checkbox, relationship } from "@keystone-next/keystone/fields";
 
 export const Pick = list({
   fields: {

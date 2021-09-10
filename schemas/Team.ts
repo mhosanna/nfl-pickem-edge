@@ -1,5 +1,5 @@
-import { list } from "@keystone-next/keystone/schema";
-import { text, relationship } from "@keystone-next/fields";
+import { list } from "@keystone-next/keystone";
+import { text } from "@keystone-next/keystone/fields";
 
 export const Team = list({
   fields: {
@@ -8,6 +8,5 @@ export const Team = list({
     abbreviation: text(),
     conference: text(),
     division: text(),
-    //TODO: add games relationship
   },
 });

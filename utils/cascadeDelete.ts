@@ -7,7 +7,7 @@ type BeforeDeleteType = Exclude<
   undefined
 >
 type BeforeDeleteParameter = Parameters<BeforeDeleteType>[0] & {
-  fieldPath: string
+  fieldKey: string
 }
 
 type HookConfig = {
@@ -20,8 +20,8 @@ type IdObject = { id: Id }
 
 export const deleteOneBeforeDeleteHook =
   ({ ref }: HookConfig) =>
-  async ({ existingItem, context, fieldPath }: BeforeDeleteParameter) => {
-    const idPath = fieldPath + "Id"
+  async ({ existingItem, context, fieldKey }: BeforeDeleteParameter) => {
+    const idPath = fieldKey + "Id"
     const id = (existingItem as { [idPath: string]: Id })[idPath]
     if (id) await context.lists[ref].deleteOne({ where: {id}})
   }
@@ -31,16 +31,16 @@ export const deleteManyBeforeDeleteHook =
   async ({
     existingItem,
     context,
-    fieldPath,
+    fieldKey,
     listKey,
   }: BeforeDeleteParameter) => {
     const { id } = existingItem as IdObject
     const parentWithChildren = await context.lists[listKey].findOne({
       where: { id },
-      query: `${fieldPath} { id }`,
+      query: `${fieldKey} { id }`,
     })
 
-    const children = parentWithChildren[fieldPath] as [IdObject] | undefined
+    const children = parentWithChildren[fieldKey] as [IdObject] | undefined
     const ids = (children || []).map(({ id }) => { return {id} })
 
     await context.db.lists[ref].deleteMany({where: ids })
