@@ -1,5 +1,5 @@
 import { PickCreateInput } from "./../.keystone/schema-types";
-import { KeystoneContext } from "@keystone-next/types";
+import { KeystoneContext } from "@keystone-next/keystone/types";
 
 async function upsertPicks(
   root: any,

@@ -1,5 +1,6 @@
-import { list } from "@keystone-next/keystone/schema";
-import { text, integer, float, relationship } from "@keystone-next/fields";
+import { list } from "@keystone-next/keystone";
+import { text,float, relationship, timestamp } from "@keystone-next/keystone/fields";
+// import {atTracking} from "@keystonejs/list-plugins";
 import { deleteManyBeforeDeleteHook } from "../utils/cascadeDelete"
 
 export const Game = list({
@@ -16,9 +17,10 @@ export const Game = list({
     },
   },
   fields: {
-    season: text({ isRequired: true }),
-    slug: text({isRequired: true}),
+    season: text({ isRequired: true, isFilterable: true }),
+    slug: text({isRequired: true, isFilterable: true}),
     week: relationship({
+      isFilterable: true,
       ref: "Week.games",
       many: false,
     }),
@@ -32,6 +34,7 @@ export const Game = list({
       many: false,
     }),
     winner: relationship({
+      isFilterable: true,
       ref: "Team",
       many: false,
     }),
@@ -42,6 +45,7 @@ export const Game = list({
         beforeDelete: deleteManyBeforeDeleteHook({ref: "Pick"}),
       },
     }),
+    createdAt: timestamp({isFilterable: true, isOrderable: true})
   },
   hooks: {
     validateInput: async ({
