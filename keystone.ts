@@ -45,7 +45,9 @@ export default withAuth(
     },
     db: {
       adapter: "prisma_postgresql",
-      url: process.env.DATABASE_URL || "postgres://localhost/nfl-pickem-db",
+      url:
+        process.env.DATABASE_URL ||
+        "postgres://newuser@localhost/nfl_pickem_db",
       async onConnect(context) {
         console.log("Connected to the database!");
         if (process.argv.includes("--seed-data")) {
