@@ -1,5 +1,22 @@
 <div id="top"></div>
 
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/mhosanna/nfl-pickem-ui">
+    <img src="https://www.pick-em.club/favicon.ico" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">Pick 'Em!</h3>
+
+  <p align="center">
+    Web app to play an NFL pick 'em game
+    <br />
+    <a href="https://github.com/mhosanna/nfl-pickem-ui"><strong>Frontend Docs »</strong></a>
+    <br />
+  </p>
+</div>
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -30,7 +47,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is the backend repo powering [the Pick 'Em! web app UI](https://github.com/mhosanna/nfl-pickem-ui). More information can be found in that repo's README.
+This is the backend repo powering [the Pick 'Em! web app UI](https://github.com/mhosanna/nfl-pickem-ui). More information can be found in the frontend repo [README](https://github.com/mhosanna/nfl-pickem-ui/blob/main/README.md).
+
+![Pick 'Em Frontend Screen Shot](https://www.pick-em.club/demo/edit-game.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
